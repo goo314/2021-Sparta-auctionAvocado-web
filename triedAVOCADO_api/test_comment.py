@@ -11,7 +11,7 @@ db = client.dbsparta  # 'dbsparta'라는 이름의 db를 만들거나 사용합�
 
 @app.route('/')
 def home():
-    return render_template('test_card.html')
+    return render_template('test_index.html')
 
 
 @app.route('/api/list', methods=['GET'])

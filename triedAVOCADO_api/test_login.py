@@ -53,17 +53,17 @@ def login_required(f):
 @app.route('/')
 @login_required
 def home():
-    return render_template('test_login.html', user=g.user)
+    return render_template('test_index.html', user=g.user)
 
 
 @app.route('/login')
 def login():
-    return render_template('test_login.html')
+    return render_template('test_index.html')
 
 
 @app.route('/register')
 def register():
-    return render_template('test_login.html')
+    return render_template('test_index.html')
 
 
 #################################

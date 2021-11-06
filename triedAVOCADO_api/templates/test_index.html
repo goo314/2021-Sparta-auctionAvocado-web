@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+
+    <!-- JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+
+    <title>Title</title>
+
+    <style>
+        * {
+            font-size: 30px;
+            padding: 10px;
+        }
+    </style>
+
+    <script>
+        function signUp() {
+            let id = $('#id').val()
+            let pw = $('#pw').val()
+            let nickname = $('#nickname').val()
+
+            if (id === '') return alert('아이디를 입력해주세요')
+            if (pw === '') return alert('비밀번호를 입력해주세요')
+            if (nickname === '') return alert('닉네임을 입력해주세요')
+
+            $.ajax({
+                type: "POST",
+                url: "/api/register",
+                data: {id_give: id, pw_give: pw, nickname_give: nickname},
+                success: function (response) {
+                    if (response['result'] === 'success') {
+                        alert('🎉 Sign up is complete 🎉')
+                        location.href = '/login'
+                    } else {
+                        alert(response['msg'])
+                    }
+                }
+            })
+        }
+
+        function login() {
+            let id = $('#id').val()
+            let pw = $('#pw').val()
+
+            $.ajax({
+                type: "POST",
+                url: "/api/login",
+                data: {id_give: id, pw_give: pw},
+                success: function (response) {
+                    if (response['result'] === 'success') {
+                        alert(response['msg'])
+                        location.href = '/'
+                    } else {
+                        // 로그인이 안되면 에러메시지를 띄웁니다.
+                        alert(response['msg'])
+                    }
+                }
+            })
+        }
+
+        function post() {
+            let sign = $('#sign').val();
+            let title = $("#title").val();
+            let product = $("#product").val();
+
+            // 2. memo에 POST 방식으로 메모 생성 요청하기
+            $.ajax({
+                type: "POST",
+                url: "/api/post",
+                data: {sign_give: sign, title_give: title, product_give: product},
+                success: function (response) { // 성공하면
+                    if (response["result"] == "success") {
+                        alert("포스팅 성공!");
+                        // 3. 성공 시 페이지 새로고침하기
+                        window.location.reload();
+                    } else {
+                        alert("서버 오류!");
+                    }
+                }
+            })
+        }
+
+
+    </script>
+</head>
+
+
+<body>
+<div>
+    <!-- ID -->
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text label">ID</span>
+        </div>
+        <input type="text" class="form-control" id="id" placeholder="아이디를 입력해주세요" aria-label="id"
+               aria-describedby="id">
+    </div>
+    <!-- PW -->
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text label">PW</span>
+        </div>
+        <input type="password" class="form-control" id="pw" placeholder="비밀번호를 입력해주세요" aria-label="pw"
+               aria-describedby="pw">
+    </div>
+    <!-- Nickname -->
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text label">Nickname</span>
+        </div>
+        <input type="text" class="form-control" id="nickname" placeholder="닉네임을 입력해주세요" aria-label="pw"
+               aria-describedby="nickname">
+    </div>
+    <button class="btn btn-primary sign-in" onclick="signUp()">로그인</button>
+</div>
+
+<div>
+    <!-- Sign -->
+    <p>
+        Sign : <input type="text" id="sign" placeholder="sign 를 입력해주세요" aria-label="id"
+                      aria-describedby="id">
+    </p>
+    <!-- Title -->
+    <p>
+        Title : <input type="text" id="title" placeholder="title 를 입력해주세요" aria-label="id"
+                       aria-describedby="id">
+    </p>
+    <!-- Product -->
+    <p>
+        Product : <input type="text" id="product" placeholder="product 를 입력해주세요" aria-label="id"
+                         aria-describedby="id">
+    </p>
+    <button class="btn btn-primary sign-in" onclick="post()">포스트 저장</button>
+</div>
+
+
+
+
+</body>
+</html>
