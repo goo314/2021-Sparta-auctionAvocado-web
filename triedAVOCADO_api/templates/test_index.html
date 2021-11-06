@@ -92,6 +92,26 @@
             })
         }
 
+        function comment() {
+            let nickname = $('#comment_nickname').val();
+            let price = $("#price").val();
+
+            $.ajax({
+                type: "POST",
+                url: "/api/comment",
+                data: {nickname_give: nickname, price_give: price},
+                success: function (response) { // 성공하면
+                    if (response["result"] == "success") {
+                        alert("댓글 포스팅 성공!");
+                        // 3. 성공 시 페이지 새로고침하기
+                        window.location.reload();
+                    } else {
+                        alert("서버 오류!");
+                    }
+                }
+            })
+        }
+
 
     </script>
 </head>
@@ -99,6 +119,7 @@
 
 <body>
 <div>
+    <p> 로그인 </p>
     <!-- ID -->
     <div class="input-group mb-3">
         <div class="input-group-prepend">
@@ -127,6 +148,7 @@
 </div>
 
 <div>
+    <p> 포스트 </p>
     <!-- Sign -->
     <p>
         Sign : <input type="text" id="sign" placeholder="sign 를 입력해주세요" aria-label="id"
@@ -145,6 +167,20 @@
     <button class="btn btn-primary sign-in" onclick="post()">포스트 저장</button>
 </div>
 
+<div>
+    <p> 댓글</p>
+    <!-- Nickname -->
+    <p>
+        Nickname : <input type="text" id="comment_nickname" placeholder="nickname 를 입력해주세요" aria-label="id"
+                      aria-describedby="id">
+    </p>
+    <!-- Price -->
+    <p>
+        Price : <input type="text" id="price" placeholder="price 를 입력해주세요" aria-label="id"
+                       aria-describedby="id">
+    </p>
+    <button class="btn btn-primary sign-in" onclick="comment()">댓글 저장</button>
+</div>
 
 
 

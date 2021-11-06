@@ -20,20 +20,16 @@ def read_contents():
     return jsonify({'result': 'success', 'contents': result})
 
 
-@app.route('/api/post', methods=['POST'])
+@app.route('/api/comment', methods=['POST'])
 def post_contents():
-    # sign 정렬기준, title 제목, comment
-    sign_receive = request.form['sign_give']
-    title_receive = request.form['title_give']
-    product_receive = request.form['product_give']
-
-    content = {
-        'sign': sign_receive,
-        'title': title_receive,
-        'product': product_receive
+    nickname_receive = request.form['nickname_give']
+    price_receive = request.form['price_give']
+    comment = {
+        'nickname': nickname_receive,
+        'price': price_receive
     }
 
-    db.contents.insert_one(content)
+    db.conmments.insert_one(comment)
 
     return jsonify({'result': 'success'})
 
