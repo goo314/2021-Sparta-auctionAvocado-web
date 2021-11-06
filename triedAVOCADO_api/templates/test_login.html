@@ -70,44 +70,22 @@
             })
         }
 
-        function post_content() {
+        function post_card() {
             let sign = $('#sign').val();
             let title = $("#title").val();
             let product = $("#product").val();
             let deadline = $('#deadline').val();
 
-            // 2. memo에 POST 방식으로 메모 생성 요청하기
             $.ajax({
                 type: "POST",
-                url: "/content/post",
+                url: "/post",
                 data: {sign_give: sign, title_give: title, product_give: product, deadline_give: deadline},
                 success: function (response) { // 성공하면
                     if (response["result"] == "success") {
+                        $('#title-comment').text(title)
                         alert("포스팅 성공!");
                         // 3. 성공 시 페이지 새로고침하기
-                        window.location.reload();
-                    } else {
-                        alert("서버 오류!");
-                    }
-                }
-            })
-        }
-
-        function post() {
-            let sign = $('#sign').val();
-            let title = $("#title").val();
-            let product = $("#product").val();
-
-            // 2. memo에 POST 방식으로 메모 생성 요청하기
-            $.ajax({
-                type: "POST",
-                url: "/api/post",
-                data: {sign_give: sign, title_give: title, product_give: product},
-                success: function (response) { // 성공하면
-                    if (response["result"] == "success") {
-                        alert("포스팅 성공!");
-                        // 3. 성공 시 페이지 새로고침하기
-                        window.location.reload();
+                        // window.location.reload();
                     } else {
                         alert("서버 오류!");
                     }
@@ -116,13 +94,13 @@
         }
 
         function comment() {
-            let nickname = $('#comment_nickname').val();
+            let title = $('#title-comment').text();
             let price = $("#price").val();
 
             $.ajax({
                 type: "POST",
-                url: "/api/comment",
-                data: {nickname_give: nickname, price_give: price},
+                url: "/comment",
+                data: {title_give: title, price_give: price},
                 success: function (response) { // 성공하면
                     if (response["result"] == "success") {
                         alert("댓글 포스팅 성공!");
@@ -167,7 +145,7 @@
         <input type="text" class="form-control" id="nickname" placeholder="닉네임을 입력해주세요" aria-label="pw"
                aria-describedby="nickname">
     </div>
-    <button class="btn btn-primary sign-in" onclick="signUp()">로그인</button>
+    <button class="btn btn-primary sign-in" onclick="login()">로그인</button>
 </div>
 
 <div>
@@ -191,16 +169,12 @@
         Deadline : <input type="text" id="deadline" placeholder="deadline 를 입력해주세요" aria-label="id"
                       aria-describedby="id">
     </p>
-    <button class="btn btn-primary sign-in" onclick="post_content()">포스트 저장</button>
+    <button class="btn btn-primary sign-in" onclick="post_card()">포스트 저장</button>
 </div>
 
 <div>
+    <p id="title-comment">1</p>
     <p> 댓글</p>
-    <!-- Nickname -->
-    <p>
-        Nickname : <input type="text" id="comment_nickname" placeholder="nickname 를 입력해주세요" aria-label="id"
-                      aria-describedby="id">
-    </p>
     <!-- Price -->
     <p>
         Price : <input type="text" id="price" placeholder="price 를 입력해주세요" aria-label="id"

@@ -21,7 +21,7 @@ def read_contents():
 
 
 @app.route('/api/comment', methods=['POST'])
-def post_contents():
+def post_comment():
     nickname_receive = request.form['nickname_give']
     price_receive = request.form['price_give']
     comment = {
