@@ -44,7 +44,7 @@
             list-style: none;
         }
 
-        img{
+        img {
             object-fit: cover;
         }
 
@@ -85,9 +85,10 @@
 
         .auction-category {
             margin: 10px;
-            padding: 20px;
+            padding: 50px;
             border-radius: 10px;
-            flex-grow: 1; /* 해당 flex-item이 차지하는 비율 */
+            text-align: center;
+            flex: 1;
         }
 
         #lowest-auction-category {
@@ -104,7 +105,7 @@
 
         .auction-cardbox {
             margin: 10px;
-            flex-grow: 3;
+            flex: 4;
         }
 
         .card-title {
@@ -135,10 +136,16 @@
             color: #fff;
         }
 
-
     </style>
-
 </head>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+
+<script>
+    $(".carousel").carousel();
+</script>
+
 
 <body>
 <div id="page">
@@ -177,8 +184,7 @@
 
     <main>
         <!--intro banner-->
-
-        <div class="intro-banner">
+        <div>
             <img src="../static/auction-sample.jpeg" style="width: 100%; height: 500px">
         </div>
 
@@ -186,7 +192,11 @@
         <!-- Lowest price auction -->
         <div class="auction" id="lowest-auction">
             <div class="auction-category" id="lowest-auction-category">
-                What are you looking for
+                <h4>WHAT ARE YOU LOOKING FOR</h4>
+                <p>
+                    원하는 물건이 있는데 어디서 사야될지 모르겠나요? 도움이 필요한데 전문가를 부르기에는 부담되나요?
+                    글을 올려보세요! 사람들이 좋은 가격에 물건을 제시할 거에요
+                </p>
             </div>
 
             <div class="auction-cardbox">
@@ -237,9 +247,31 @@
                                 </div>
                             </div>
                         </div>
+
                         <div class="carousel-item">
-                            hehe
+                            <div class="card-deck">
+                                <div class="card">
+                                    <img class="card-img-top" src="../static/art_image.jpeg" alt="Card image cap">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Card title</h5>
+                                        <p class="card-text">
+                                            <small class="text-muted">3 minutes left</small>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <img class="card-img-top" src="../static/art_image.jpeg" alt="Card image cap">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Card title</h5>
+                                        <p class="card-text">
+                                            <small class="text-muted">3 minutes left</small>
+                                        </p>
+                                    </div>
+                                </div>
+
+                            </div>
                         </div>
+
                         <div class="carousel-item">
                             wow
                         </div>
@@ -260,7 +292,11 @@
         <!-- General auction-->
         <div class="auction" id="general-auction">
             <div class="auction-category" id="general-auction-category">
-                What are you looking for
+                <h4 style="text-align: center">WHAT DO YOU WANT TO BUY</h4>
+                <p>
+                    다른 사람들이 만든 예술품이나 재능을 구매할 수 있어요.
+                    원하는 것이 있다면 얼른 호가를 부르세요 마감시간이 얼마 남지 않았어요!
+                </p>
             </div>
 
             <div class="auction-cardbox">
@@ -312,10 +348,10 @@
                             </div>
                         </div>
                         <div class="carousel-item">
-                            hehe
+                            second
                         </div>
                         <div class="carousel-item">
-                            wow
+                            third
                         </div>
                     </div>
                     <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
