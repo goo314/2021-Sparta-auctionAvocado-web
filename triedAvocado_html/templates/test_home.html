@@ -44,10 +44,6 @@
             list-style: none;
         }
 
-        img {
-            object-fit: cover;
-        }
-
         header {
             display: block;
             background-color: skyblue;
@@ -71,8 +67,8 @@
         }
 
         .auction {
-            display: flex; /* flex container 역할 시작 */
-            flex-direction: row; /* 직계 자손(flex-item) 정렬 방향 */
+            display: flex;
+            flex-direction: row;
         }
 
         #lowest-auction {
@@ -99,23 +95,27 @@
             background-color: antiquewhite;
         }
 
-        .card-deck {
-            margin: 50px 10px;
-        }
-
         .auction-cardbox {
             margin: 10px;
             flex: 4;
+        }
+
+        .card-deck {
+            margin: 50px 10px;
         }
 
         .card-title {
             margin: 0;
         }
 
+        .card-img-top {
+            height: 13rem;
+            object-fit: cover;
+        }
+
         .card-body {
             padding: 10px;
         }
-
 
         footer {
             display: block;
@@ -127,7 +127,7 @@
         }
 
         .social-media {
-            margin-bottom: 30px;
+            margin-bottom: 20px;
         }
 
         .social-media h3 {
@@ -138,12 +138,13 @@
 
     </style>
 </head>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-        crossorigin="anonymous"></script>
 
 <script>
-    $(".carousel").carousel();
+    let Carousel0 = document.querySelector('#carouselIndicators-0')
+    let carousel0 = new bootstrap.Carousel(Carousel0)
+
+    let Carousel1 = document.querySelector('#carouselIndicators-1')
+    let carousel1 = new bootstrap.Carousel(Carousel1)
 </script>
 
 
@@ -183,28 +184,30 @@
     </header>
 
     <main>
-        <!--intro banner-->
+        <!--Intro banner-->
         <div>
-            <img src="../static/auction-sample.jpeg" style="width: 100%; height: 500px">
+            <img src="../static/auction-sample.jpeg" style="width: 100%; height: 40vw">
         </div>
 
 
         <!-- Lowest price auction -->
         <div class="auction" id="lowest-auction">
+            <!--introduction-->
             <div class="auction-category" id="lowest-auction-category">
                 <h4>WHAT ARE YOU LOOKING FOR</h4>
                 <p>
                     원하는 물건이 있는데 어디서 사야될지 모르겠나요? 도움이 필요한데 전문가를 부르기에는 부담되나요?
                     글을 올려보세요! 사람들이 좋은 가격에 물건을 제시할 거에요
                 </p>
+                <a href="https://blog.naver.com/rn0731"> Learn more >> </a>
             </div>
-
+            <!--contents-->
             <div class="auction-cardbox">
-                <div class="carousel slide" data-ride="carousel">
+                <div id="carouselIndicators-0" class="carousel slide" data-ride="carousel">
+                    <!--kind of pagination-->
                     <ol class="carousel-indicators">
-                        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                        <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                        <li data-target="#carouselIndicators-0" data-slide-to="0" class="active"></li>
+                        <!-- put here -->
                     </ol>
                     <div class="carousel-inner">
                         <div class="carousel-item active">
@@ -236,51 +239,16 @@
                                         </p>
                                     </div>
                                 </div>
-                                <div class="card">
-                                    <img class="card-img-top" src="../static/art_image.jpeg" alt="Card image cap">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Card title</h5>
-                                        <p class="card-text">
-                                            <small class="text-muted">3 minutes left</small>
-                                        </p>
-                                    </div>
-                                </div>
                             </div>
                         </div>
-
-                        <div class="carousel-item">
-                            <div class="card-deck">
-                                <div class="card">
-                                    <img class="card-img-top" src="../static/art_image.jpeg" alt="Card image cap">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Card title</h5>
-                                        <p class="card-text">
-                                            <small class="text-muted">3 minutes left</small>
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="card">
-                                    <img class="card-img-top" src="../static/art_image.jpeg" alt="Card image cap">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Card title</h5>
-                                        <p class="card-text">
-                                            <small class="text-muted">3 minutes left</small>
-                                        </p>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-
-                        <div class="carousel-item">
-                            wow
-                        </div>
+                        <!-- put here -->
                     </div>
-                    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                    <!-- direction buttons -->
+                    <a class="carousel-control-prev" href="#carouselIndicators-0" role="button" data-slide="prev">
                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                         <span class="sr-only">Previous</span>
                     </a>
-                    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                    <a class="carousel-control-next" href="#carouselIndicators-0" role="button" data-slide="next">
                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
                         <span class="sr-only">Next</span>
                     </a>
@@ -291,20 +259,21 @@
 
         <!-- General auction-->
         <div class="auction" id="general-auction">
+            <!--introduction-->
             <div class="auction-category" id="general-auction-category">
                 <h4 style="text-align: center">WHAT DO YOU WANT TO BUY</h4>
                 <p>
                     다른 사람들이 만든 예술품이나 재능을 구매할 수 있어요.
-                    원하는 것이 있다면 얼른 호가를 부르세요 마감시간이 얼마 남지 않았어요!
+                    원하는 것이 있다면 얼른 가격을 부르세요 마감시간이 얼마 남지 않았어요!
                 </p>
+                <a href="https://blog.naver.com/rn0731"> Learn more >> </a>
             </div>
-
+            <!--contents-->
             <div class="auction-cardbox">
-                <div class="carousel slide" data-ride="carousel">
+                <div id="carouselIndicators-1" class="carousel slide" data-ride="carousel">
                     <ol class="carousel-indicators">
-                        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                        <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                        <li data-target="#carouselIndicators-1" data-slide-to="0" class="active"></li>
+                        <!-- put here -->
                     </ol>
                     <div class="carousel-inner">
                         <div class="carousel-item active">
@@ -336,29 +305,15 @@
                                         </p>
                                     </div>
                                 </div>
-                                <div class="card">
-                                    <img class="card-img-top" src="../static/art_image.jpeg" alt="Card image cap">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Card title</h5>
-                                        <p class="card-text">
-                                            <small class="text-muted">3 minutes left</small>
-                                        </p>
-                                    </div>
-                                </div>
                             </div>
                         </div>
-                        <div class="carousel-item">
-                            second
-                        </div>
-                        <div class="carousel-item">
-                            third
-                        </div>
+                        <!-- put here -->
                     </div>
-                    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                    <a class="carousel-control-prev" href="#carouselIndicators-1" role="button" data-slide="prev">
                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                         <span class="sr-only">Previous</span>
                     </a>
-                    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                    <a class="carousel-control-next" href="#carouselIndicators-1" role="button" data-slide="next">
                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
                         <span class="sr-only">Next</span>
                     </a>
