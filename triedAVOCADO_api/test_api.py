@@ -130,11 +130,20 @@ def api_logout():
     return res
 
 
-# Read all cards with id
+# Read all cards without id
 @app.route('/card', methods=['GET'])
-def read_cards():
-    result = list(db.cards.find({}, {'_id': 0}))
+def show_cards():
+    result = list(db.contents.find({}, {'_id': False}))
     return jsonify({'result': 'success', 'contents': result})
+
+
+# show certain page
+@app.route('/page', methods=['GET'])
+def show_page():
+    title_receive = request.form['title_give']
+    content = db.contents.find_one({'title': title_receive}, {'_id': False})
+    content['comments'] = sorted(content['comments'], key=lambda item: item['price'])
+    return jsonify({'result': 'success', 'content': content})
 
 
 def object_id_decoder(data):
@@ -172,20 +181,17 @@ def post_card():
 def post_comment():
     title_receive = request.form['title_give']
     price_receive = request.form['price_give']
-    print('hey...why,,,')
     d = datetime.now()
 
     new_comments = db.contents.find_one({'title': title_receive}, {'_id': 0})['comments']
-    print(new_comments)
 
     comment = {
         'user_objectId': object_id_decoder(g.user)['_id'],
         'nickname': object_id_decoder(g.user)['nick'],
-        'price': price_receive,
+        'price': int(price_receive),
         'date': str(d.year) + "-" + str(d.month) + "-" + str(d.day)
     }
     new_comments.append(comment)
-    print(new_comments)
     db.contents.update_one({'title': title_receive}, {'$set': {'comments': new_comments}})
 
     return jsonify({'result': 'success'})
