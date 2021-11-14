@@ -1,10 +1,280 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+
+    <title> 🥑 Avocado | home </title>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+
+    <!-- JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+
+    <!--Font-->
+    <link href="https://fonts.googleapis.com/css2?family=Gugi&display=swap" rel="stylesheet">
+
+    <style>
+
+        @import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&family=Raleway&display=swap');
+
+        @font-face {
+            font-family: 'Nanum Gothic';
+            src: url('../static/NanumGothic-Regular.ttf');
+            unicode-range: U+AC00-D7A3;
+        }
+
+        * {
+            font-family: "Raleway", "Nanum Gothic";
+        }
+
+        html, body {
+            margin: 0;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        header {
+            display: block;
+            background-color: skyblue;
+        }
+
+        main {
+            display: block;
+            background-color: lightgrey;
+        }
+
+        .nav-item {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .nav-item a {
+            padding: 10px;
+            font-size: 1.3rem;
+            color: #fff;
+        }
+
+        .wrap {
+            width: 100%;
+            padding: 20px;
+            display: flex;
+            flex-direction: row;
+            background-image: url("../static/auction-sample.jpeg");
+        }
+
+        .nav-wrap {
+            height: 100%;
+            width: 200px;
+            background: lightblue;
+        }
+
+        .content-wrap {
+            width: 100%;
+            padding: 50px 100px;
+            background: beige;
+        }
+
+        .posting-header{
+            border-bottom: 1px solid #555555;
+        }
+
+        .products-info {
+            margin: 20px;
+        }
+
+        .comments-wrap {
+            margin: 20px;
+        }
+
+        td, tr {
+            text-align: center;
+        }
+
+        footer {
+            display: block;
+            background-color: #333;
+            text-align: center;
+            padding: 20px 10px;
+            line-height: 20px;
+            color: #fff;
+        }
+
+        .social-media {
+            margin-bottom: 20px;
+        }
+
+        .social-media h3 {
+            padding: 5px;
+            text-transform: uppercase;
+            color: #fff;
+        }
+
+    </style>
 </head>
+
 <body>
-<div>hi</div>
+<div id="page">
+    <header>
+        <!--Top bar-->
+        <nav class="navbar" style="background: #333">
+            <div class="nav justify-content-start" style="background: #333">
+                <!--Logo-->
+                <a class="navbar-brand" href="#" style="color: #fff; font-family: 'Gugi'; font-size: 1.5rem">
+                    <img src="../static/avocado_logo.png" alt="" width="60" height="60"
+                         class="d-inline-block align-text-center">
+                    Avocado
+                </a>
+                <!--Sell-->
+                <li class="nav-item">
+                    <a class="nav-link" href="/test_sell"
+                    style="background-color: saddlebrown; border-radius: 100px">Sell</a>
+                </li>
+                <!--Buy-->
+                <li class="nav-item">
+                    <a class="nav-link" href="/test_buy"> Buy</a>
+                </li>
+            </div>
+
+            <div class="nav justify-content-end" style="background: #333">
+                <!--Sign in-->
+                <li>
+                    <button class="btn btn-outline-light mr-2" type="button">Sign in</button>
+                </li>
+                <!--Login-->
+                <li>
+                    <button class="btn btn-success" type="button">Login</button>
+                </li>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="wrap">
+            <div class="nav-wrap">
+                <!-- post box -->
+                <div style="padding: 10px; background-color: white">
+                    <button type="button" class="btn btn-outline-success"
+                            style="width: 100%">
+                        Post
+                    </button>
+                </div>
+                <!--categories-->
+                <ul class="list-group">
+                    <li class="list-group-item active" onclick="f1()">
+                        product1
+                    </li>
+                    <li class="list-group-item">
+                        product2
+                    </li>
+                    <li class="list-group-item">
+                        product3
+                    </li>
+                </ul>
+
+            </div>
+
+            <!-- Posting -->
+            <div class="content-wrap">
+                <!-- title -->
+                <div class="posting-header">
+                    <div class="container">
+                        <div class="row justify-content-end">
+                            <div class="col">
+                                <h2>Title</h2>
+                            </div>
+                            <div class="col-auto">
+                                writer
+                            </div>
+                            <div class="col-auto">
+                                created
+                            </div>
+                            <div class="col-auto">
+                                deadline
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--product-info-->
+                <div class="products-info">
+                    <h5> Product </h5>
+                    <p> I want to sell or buy ... </p>
+                    <img src="../static/product-sample.jpeg" style="width: 100%; height: 100%">
+                </div>
+
+                <!-- comments -->
+                <div class="comments-wrap">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">₩</span>
+                        <input type="text" class="form-control" placeholder="원하는 가격을 적어주세요 (예: 100000)"
+                               aria-label="Recipient's username" aria-describedby="button-addon2">
+                        <button class="btn btn-outline-secondary" type="button" id="button-addon2">Button
+                        </button>
+                    </div>
+
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">닉네임</th>
+                            <th scope="col">가격</th>
+                            <th scope="col">날짜</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        <tr>
+                            <td>하모예</td>
+                            <td>100</td>
+                            <td>2021-00-00</td>
+                        </tr>
+                        <tr>
+                            <td>하모예</td>
+                            <td>100</td>
+                            <td>2021-00-00</td>
+                        </tr>
+                        <tr>
+                            <td>하모예</td>
+                            <td>100</td>
+                            <td>2021-00-00</td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+
+
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="social-media">
+            <h3> Follow Us
+                <a class="social-media-instagram" href="https://www.instagram.com/goo_sh314/">
+                    <img src="../static/social-media-instagram-sample.png" alt="instagram">
+                </a>
+            </h3>
+        </div>
+        <p class="copyright">
+            © goo314, All Rights Reserved
+        </p>
+    </footer>
+
+</div>
+
 </body>
+
 </html>
