@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <title> 🥑 Avocado </title>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+
+    <!-- JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+
+    <!--Font-->
+    <link href="https://fonts.googleapis.com/css2?family=Gugi&display=swap" rel="stylesheet">
+
+    <style>
+
+        @import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&family=Raleway&display=swap');
+
+        @font-face {
+            font-family: 'Nanum Gothic';
+            src: url('../static/NanumGothic-Regular.ttf');
+            unicode-range: U+AC00-D7A3;
+        }
+
+        * {
+            font-family: "Raleway", "Nanum Gothic";
+        }
+
+        html, body {
+            margin: 0;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        header {
+            display: block;
+            background-color: skyblue;
+        }
+
+        main {
+            display: block;
+            background-color: lightgrey;
+        }
+
+        footer {
+            display: block;
+            background-color: #333;
+            text-align: center;
+            padding: 20px 10px;
+            line-height: 20px;
+            color: #fff;
+        }
+
+        .social-media {
+            margin-bottom: 20px;
+        }
+
+        .social-media h3 {
+            padding: 5px;
+            text-transform: uppercase;
+            color: #fff;
+        }
+    </style>
+
+    <!-- block : style -->
+    {% block style %}{% endblock %}
+
+    <!-- block : script -->
+    {% block script %}{% endblock %}
+
+</head>
+
+<body>
+<div id="page">
+    <header>
+        <!--Top bar-->
+        {% block nav %} {% endblock %}
+    </header>
+
+    <main>
+        <!-- block : main -->
+        {% block main %}{% endblock %}
+    </main>
+
+    <footer>
+        <div class="social-media">
+            <h3> Follow Us
+                <a class="social-media-instagram" href="https://www.instagram.com/goo_sh314/">
+                    <img src="../static/social-media-instagram-sample.png" alt="instagram">
+                </a>
+            </h3>
+        </div>
+        <p class="copyright">
+            © goo314, All Rights Reserved
+        </p>
+    </footer>
+
+</div>
+
+</body>
+</html>
