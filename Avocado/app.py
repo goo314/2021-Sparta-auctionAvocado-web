@@ -52,29 +52,29 @@ def login_required(f):
 
 @app.route('/')
 def home():
-    return render_template('home_v1.html')
+    return render_template('home.html')
 
 
 @app.route('/login')
 def login():
-    return render_template('login_v1.html')
+    return render_template('login.html')
 
 
 @app.route('/register')
 def register():
-    return render_template('register_v1.html')
+    return render_template('register.html')
 
 
 @app.route('/home')
 @login_required
 def home_after_login():
-    return render_template('home_after_v1.html', user=g.user)
+    return render_template('home_after.html', user=g.user)
 
 
 @app.route('/lowest')
 @login_required
 def sell():
-    return render_template('lowest_v1.html', user=g.user)
+    return render_template('lowest.html', user=g.user)
 
 
 @app.route('/highest')
