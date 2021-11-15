@@ -71,16 +71,16 @@ def home_after_login():
     return render_template('home_after_v1.html', user=g.user)
 
 
-@app.route('/sell')
+@app.route('/lowest')
 @login_required
 def sell():
-    return render_template('sell_v1.html', user=g.user)
+    return render_template('lowest_v1.html', user=g.user)
 
 
-@app.route('/buy')
+@app.route('/highest')
 @login_required
 def buy():
-    return render_template('buy_v1.html', user=g.user)
+    return render_template('highest_v1.html', user=g.user)
 
 
 #################################
@@ -147,19 +147,33 @@ def api_logout():
     return res
 
 
-# Read all cards without id
-@app.route('/card', methods=['GET'])
-def show_cards():
-    result = list(db.contents.find({}, {'_id': False}))
-    return jsonify({'result': 'success', 'contents': result})
+# Read lowest auction card
+@app.route('/api/card_0', methods=['GET'])
+def show_cards_0():
+    data = list(db.postings.find({'sign': '0'}, {'_id': False}))
+    return jsonify({"result": 'success', "data": data})
 
 
-# show certain page
-@app.route('/page', methods=['GET'])
-def show_page():
-    title_receive = request.form['title_give']
-    content = db.contents.find_one({'title': title_receive}, {'_id': False})
+# Read general auction card
+@app.route('/api/card_1', methods=['GET'])
+def show_cards_1():
+    data = list(db.postings.find({'sign': '1'}, {'_id': False}))
+    return jsonify({"result": 'success', "data": data})
+
+
+# show certain page in lowest auction
+@app.route('/api/page_0/<product>', methods=['GET'])
+def show_page_0(product):
+    content = db.postings.find_one({'sign': '0', 'product': product}, {'_id': False})
     content['comments'] = sorted(content['comments'], key=lambda item: item['price'])
+    return jsonify({'result': 'success', 'content': content})
+
+
+# show certain page in general auction
+@app.route('/api/page_1/<product>', methods=['GET'])
+def show_page_1(product):
+    content = db.postings.find_one({'sign': '1', 'product': product}, {'_id': False})
+    content['comments'] = sorted(content['comments'], key=lambda item: -item['price'])
     return jsonify({'result': 'success', 'content': content})
 
 
@@ -169,47 +183,53 @@ def object_id_decoder(data):
 
 
 # Create card
-@app.route('/post', methods=['POST'])
+@app.route('/api/post', methods=['POST'])
 @login_required
 def post_card():
     sign_receive = request.form['sign_give']
     title_receive = request.form['title_give']
-    product_receive = request.form['product_give']
     deadline_receive = request.form['deadline_give']
+    product_receive = request.form['product_give']
+    url_receive = request.form['url_give']
+    description_receive = request.form['description_give']
     d = datetime.now()
 
     content = {
         'user_objectId': object_id_decoder(g.user)['_id'],
         'sign': sign_receive,
         'title': title_receive,
-        'product': product_receive,
-        'created': str(d.year) + "-" + str(d.month) + "-" + str(d.day),
+        'writer': object_id_decoder(g.user)['nick'],
+        'created': str(d.year) + "-" + str(d.month) + "-" + str(d.day) + " " + str(d.hour) + ":" + str(d.minute),
         'deadline': deadline_receive,
+        'product': product_receive,
+        'url': url_receive,
+        'description': description_receive,
         'comments': []
     }
 
-    db.contents.insert_one(content)
+    db.postings.insert_one(content)
     return jsonify({'result': 'success'})
 
 
 # Comment
-@app.route('/comment', methods=['POST'])
+@app.route('/api/comment', methods=['POST'])
 @login_required
 def post_comment():
+    sign_receive = request.form['sign_give']
     title_receive = request.form['title_give']
     price_receive = request.form['price_give']
     d = datetime.now()
 
-    new_comments = db.contents.find_one({'title': title_receive}, {'_id': 0})['comments']
+    comments_list = db.postings.find_one({'sign': sign_receive, 'title': title_receive}, {'_id': 0})['comments']
 
-    comment = {
+    new_comment = {
         'user_objectId': object_id_decoder(g.user)['_id'],
         'nickname': object_id_decoder(g.user)['nick'],
         'price': int(price_receive),
-        'date': str(d.year) + "-" + str(d.month) + "-" + str(d.day)
+        'date': str(d.year) + "-" + str(d.month) + "-" + str(d.day) + " " + str(d.hour) + ":" + str(d.minute)
     }
-    new_comments.append(comment)
-    db.contents.update_one({'title': title_receive}, {'$set': {'comments': new_comments}})
+    comments_list.append(new_comment)
+    db.postings.update_one({'title': title_receive}, {'$set': {'comments': comments_list}})
 
     return jsonify({'result': 'success'})
 
