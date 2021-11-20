@@ -149,6 +149,7 @@
                     <tr>
                         <th scope="col">Nickname</th>
                         <th scope="col">Price (won)</th>
+                        <th scope="col">Price ($)</th>
                         <th scope="col">Date</th>
                     </tr>
                     </thead>
@@ -290,11 +291,20 @@
         });
     }
 
-    function showPosting(obj) {
+    async function showPosting(obj) {
         $(".list-group-item").removeClass('active');
         $(obj).addClass('active');
 
         let product = $(obj).text();
+
+        let rate;
+        await $.ajax({
+            type: "GET",
+            url: "https://api.manana.kr/exchange/rate.json",
+            success: function (response) {
+                rate = response[1]['rate'];
+            },
+        });
 
         $.ajax({
             type: "GET",
@@ -327,16 +337,20 @@
                     const comment_list = page['comments'];
                     for (let i = 0; i < comment_list.length; i++) {
                         let comment = comment_list[i];
+                        let price_kr = comment['price'];
+                        let price_us = price_kr/rate;
                         if (i == 0) {
                             tempHtml = `<tr id="top-comment">
                                     <td>${comment['nickname']}</td>
-                                    <td>${comment['price']}</td>
+                                    <td>${price_kr.toLocaleString('ko-KR')}</td>
+                                    <td>${price_us.toFixed(2)}</td>
                                     <td>${comment['date']}</td>
                                 </tr>`
                         } else {
                             tempHtml = `<tr>
                                     <td>${comment['nickname']}</td>
-                                    <td>${comment['price']}</td>
+                                    <td>${price_kr.toLocaleString('ko-KR')}</td>
+                                    <td>${price_us.toFixed(2)}</td>
                                     <td>${comment['date']}</td>
                                 </tr>`
                         }
@@ -440,6 +454,7 @@
                     const product = $('#product-info h5').text();
                     const obj = $(`#items li:contains("${product}")`)[0];
                     showPosting(obj);
+                    $("#comment-price").val('');
                 } else {
                     alert("서버 오류!");
                 }
