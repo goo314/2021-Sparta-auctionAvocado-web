@@ -1,0 +1,465 @@
+{% extends "layout_home.html" %}
+
+<!--Top bar-->
+{% block nav %}
+<nav class="navbar" style="background: #333">
+    <div class="nav justify-content-start" style="background: #333">
+        <!--Logo-->
+        <a class="navbar-brand" href="/home" style="color: #fff; font-family: 'Gugi'; font-size: 1.5rem">
+            <img src="../static/avocado_logo.png" alt="" width="60" height="60"
+                class="d-inline-block align-text-center">
+            Avocado
+        </a>
+        <!--Sell-->
+        <li class="nav-item">
+            <a class="nav-link" href="/lowest" style="background-color: saddlebrown; border-radius: 100px">Lowest</a>
+        </li>
+        <!--Buy-->
+        <li class="nav-item">
+            <a class="nav-link" href="/highest"> Highest</a>
+        </li>
+    </div>
+
+    <div class="nav justify-content-end" style="background: #333">
+        <!--Sign out-->
+        <li>
+            <button class="btn btn-primary mr-2" onclick="signOut()" type="button">Sign out
+            </button>
+        </li>
+    </div>
+</nav>
+{% endblock %}
+
+<!-- main -->
+{% block main %}
+<div class="wrap">
+    <div class="nav-wrap">
+        <!-- post button -->
+        <div style="padding: 10px; background-color: white">
+            <button type="button" class="btn btn-outline-success" onclick="openClose()" id="post-box-btn"
+                style="width: 100%">
+                Want to post?
+            </button>
+        </div>
+        <!--categories-->
+        <ul id="items" class="list-group">
+            <li class="list-group-item active" onclick="showPosting()">
+                product1
+            </li>
+        </ul>
+
+    </div>
+
+    <!-- Posting -->
+    <div class="content-wrap">
+        <!-- post box -->
+        <div id="post-box" class="form-post" style="display:none">
+            <div class="post-intro">
+                <h3>What do you want to post</h3>
+                <p>
+                    Post anything that you are looking for.
+                    It could be products, somebody's help
+                    Fill the boxes below and wait until deadline which you set.
+                    Then somebody will comment for best price
+                </p>
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text">Title</span>
+                <input type="text" class="form-control" id="post-title">
+            </div>
+
+            <div class="input-group mb-3">
+                <span class="input-group-text">Deadline</span>
+                <input type="text" class="form-control" id="post-deadline" placeholder="ex. 2021-12-25 23:59">
+            </div>
+
+            <div class="input-group mb-3">
+                <span class="input-group-text">Product</span>
+                <input type="text" class="form-control" id="post-product">
+            </div>
+
+            <div class="input-group mb-3">
+                <span class="input-group-text">imageUrl</span>
+                <input type="text" class="form-control" id="post-url">
+            </div>
+
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Description</span>
+                </div>
+                <textarea class="form-control" id="post-description" cols="30" rows="5"
+                    placeholder="You can write up to 200 words" onkeyup="validateLength(this)"></textarea>
+            </div>
+
+            <div class="post-button">
+                <button type="button" class="btn btn-primary" onclick="post()">Save</button>
+            </div>
+        </div>
+
+        <div class="posting-content">
+            <!-- title -->
+            <div class="posting-header">
+                <div class="container">
+                    <div class="row justify-content-end">
+                        <div class="col">
+                            <h2 id="title">Notice</h2>
+                        </div>
+                        <div id="writer" class="col-auto">
+                            admin
+                        </div>
+                        <div id="created" class="col-auto">
+                            from 2021-11-15 11:50
+                        </div>
+                        <div id="deadline" class="col-auto">
+                            to 2021-12-31 22:00
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--product-info-->
+            <div id="product-info" class="products-info">
+                <h5> Welcome to the lowest price auction page 🤩 </h5>
+                <p>
+                    최저가 경매 페이지입니다. 원하는 물건이나 도움이 필요하다면 상단의 왼쪽 버튼을 눌러 글을 올려보세요!
+                    사람들이 좋은 가격을 제시해줄 거에요. 가장 낮은 가격 순서대로 댓글이 보입니다.
+                </p>
+                <p> Important ⚠️ : Avocado is an auction website.
+                    The following unacceptable behaviors will lead to permanent account removal.
+                    Unacceptable behaviors are: provided fake information, post sexual content and post advertisement
+                    ...
+                </p>
+                <img src="../static/avocado_tree.jpeg" style="width: 100%; height: 100%">
+            </div>
+
+            <!-- comments -->
+            <div class="comments-wrap">
+                <div class="input-group mb-3">
+                    <span class="input-group-text">₩</span>
+                    <input type="text" class="form-control" placeholder="Tell the price for this item (ex. 100000)"
+                        aria-label="Recipient's username" aria-describedby="button-addon2" id="comment-price">
+                    <button class="btn btn-outline-secondary" type="button" onclick="comment()">Button</button>
+                </div>
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Nickname</th>
+                            <th scope="col">Price (won)</th>
+                            <th scope="col">Price ($)</th>
+                            <th scope="col">Date</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="comments-list">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+<!-- style -->
+{% block style %}
+<style>
+    .nav-item {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .nav-item a {
+        padding: 10px;
+        font-size: 1.3rem;
+        color: #ffffff;
+    }
+
+    main {
+        display: block;
+        background-color: lightgrey;
+    }
+
+    .wrap {
+        width: 100%;
+        padding: 20px;
+        display: flex;
+        flex-direction: row;
+        background-image: url("../static/auction-sample.jpeg");
+    }
+
+    .nav-wrap {
+        height: 100%;
+        width: 200px;
+        background: lightblue;
+    }
+
+    .list-group-item {
+        text-align: center;
+    }
+
+    .content-wrap {
+        width: 100%;
+        padding: 50px 100px;
+        background: antiquewhite;
+    }
+
+    #post-box {
+        width: 90%;
+        margin: 50px;
+        padding: 50px;
+        border-radius: 5px;
+        background-color: darkseagreen;
+    }
+
+    .post-intro {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .post-button {
+        display: flex;
+        justify-content: center;
+    }
+
+    .posting-header {
+        border-bottom: 1px solid #555555;
+    }
+
+    .products-info {
+        margin: 20px;
+    }
+
+    .comments-wrap {
+        margin: 20px;
+    }
+
+    #top-comment {
+        background-color: darksalmon;
+    }
+
+    td,
+    tr {
+        text-align: center;
+    }
+</style>
+{% endblock %}
+
+<!-- script -->
+{% block script %}
+<script>
+    $(document).ready(function () {
+        showItems();
+    });
+
+    function signOut() {
+        $.ajax({
+            type: 'POST',
+            url: '/api/logout',
+            success: function (res) {
+                if (res['result'] === 'success') {
+                    alert(res['msg'])
+                    location.href = '/'
+                }
+            }
+        })
+    }
+
+    function showItems() {
+        $('#items').empty()
+
+        $.ajax({
+            type: "GET",
+            url: "/api/card_0",
+            data: {},
+            success: function (response) {
+                if (response["result"] == "success") {
+                    let postings = response['data']
+                    for (let i = 0; i < postings.length; i++) {
+                        let posting = postings[i]
+                        let item = posting['product']
+
+                        let tempHtml = `<li class="list-group-item" onclick="showPosting(this)">${item}</li>`
+                        $('#items').append(tempHtml)
+                    }
+                } else {
+                    alert("서버 오류!");
+                }
+            }
+        });
+    }
+
+    async function showPosting(obj) {
+        $(".list-group-item").removeClass('active');
+        $(obj).addClass('active');
+
+        let product = $(obj).text();
+
+        let rate;
+        await $.ajax({
+            type: "GET",
+            url: "https://api.manana.kr/exchange/rate.json",
+            success: function (response) {
+                rate = response[1]['rate'];
+            },
+        });
+
+        $.ajax({
+            type: "GET",
+            url: "/api/page_0/" + product,
+            data: {},
+            success: function (response) {
+                if (response["result"] == "success") {
+                    const page = response['content'];
+                    const title = page['title'];
+                    const writer = page['writer'];
+                    const created = page['created'];
+                    const deadline = page['deadline'];
+
+                    $('#title').text(title);
+                    $('#writer').text(writer);
+                    $('#created').text('from ' + created);
+                    $('#deadline').text('to ' + deadline);
+
+                    const product = page['product'];
+                    const url = page['url'];
+                    const desc = page['description'];
+                    $('#product-info').empty();
+                    let tempHtml = `<h5>${product}</h5>
+                                    <p>${desc}</p>
+                                    <img src="${url}" style="width: 100%; height: 100%">`
+                    $('#product-info').append(tempHtml);
+
+
+                    $('#comments-list').empty();
+                    const comment_list = page['comments'];
+                    for (let i = 0; i < comment_list.length; i++) {
+                        let comment = comment_list[i];
+                        let price_kr = comment['price'];
+                        let price_us = price_kr / rate;
+
+                        if (i == 0) {
+                            tempHtml = `<tr id="top-comment">
+                                    <td>${comment['nickname']}</td>
+                                    <td>${price_kr.toLocaleString('ko-KR')}</td>
+                                    <td>${price_us.toFixed(2)}</td>
+                                    <td>${comment['date']}</td>
+                                </tr>`
+                        } else {
+                            tempHtml = `<tr>
+                                    <td>${comment['nickname']}</td>
+                                    <td>${comment['price'].toLocaleString('ko-KR')}</td>
+                                    <td>${price_us.toFixed(2)}</td>
+                                    <td>${comment['date']}</td>
+                                </tr>`
+                        }
+
+                        $('#comments-list').append(tempHtml);
+                    }
+                } else {
+                    alert("서버 오류!");
+                }
+            }
+        });
+    }
+
+    function openClose() {
+        if ($("#post-box").css("display") == "block") {
+            $("#post-box").hide();
+            $("#post-box-btn").text("Want to post?");
+        } else {
+            $("#post-box").show();
+            $("#post-box-btn").text("Close");
+        }
+    }
+
+    function post() {
+        let title = $("#post-title").val();
+        let product = $("#post-product").val();
+        let url = $('#post-url').val();
+        let deadline = $('#post-deadline').val();
+        let description = $("#post-description").val();
+
+        if (title === '') {
+            alert('Please enter Title');
+            $("#post-title").focus();
+            return;
+        } else if (product === '') {
+            alert('Please enter name of Product');
+            $("#post-product").focus();
+            return;
+        } else if (url === '') {
+            alert('Please enter Url');
+            $('#post-url').focus();
+            return;
+        } else if (deadline === '') {
+            alert('Please enter Deadline');
+            $('#post-deadline').focus();
+            return;
+        } else if (description === '') {
+            alert("Please enter Description");
+            $('#post-description').focus();
+        }
+
+        $.ajax({
+            type: "POST",
+            url: "/api/post",
+            data: {
+                sign_give: 0,
+                title_give: title,
+                product_give: product,
+                url_give: url,
+                deadline_give: deadline,
+                description_give: description
+            },
+            success: function (response) { // 성공하면
+                if (response["result"] == "success") {
+                    alert("포스팅 성공!");
+                    window.location.reload();
+                } else {
+                    alert("서버 오류!");
+                }
+            }
+        })
+    }
+
+    function validateLength(obj) {
+        let content = $(obj).val();
+        if (content.length > 200) {
+            alert("You wrote over 200 words!");
+            $(obj).val(content.substring(0, content.length - 1));
+        }
+    }
+
+    function comment() {
+        let title = $('#title').text();
+        if (title === 'Notice') return;
+
+        let price = $("#comment-price").val();
+        var regExp = /\d/;
+        if (!regExp.test(price)) {
+            alert('Please enter only number');
+            $("#comment-price").focus();
+            return;
+        }
+
+        $.ajax({
+            type: "POST",
+            url: "/api/comment",
+            data: { sign_give: 0, title_give: title, price_give: price },
+            success: function (response) {
+                if (response["result"] == "success") {
+                    alert("댓글 포스팅 성공!");
+                    const product = $('#product-info h5').text();
+                    const obj = $(`#items li:contains("${product}")`)[0];
+                    showPosting(obj);
+                    $("#comment-price").val('');
+                } else {
+                    alert("서버 오류!");
+                }
+            }
+        })
+    }
+
+</script>
+{% endblock %}
